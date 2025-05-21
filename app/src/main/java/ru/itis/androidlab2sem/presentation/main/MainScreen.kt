@@ -24,12 +24,17 @@ import androidx.hilt.navigation.compose.hiltViewModel
 fun MainScreen() {
     val vm: MainViewModel = hiltViewModel()
     val state by vm.state.collectAsState()
+
+    CatContent(state)
+
+    TagInput { tag -> vm.loadCatByTag(tag) }
+}
+
+@Composable
+private fun TagInput(onTagSelected: (String) -> Unit) {
     var tag by remember { mutableStateOf("") }
 
-    Column(
-        modifier = Modifier.padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
+    Column {
         OutlinedTextField(
             value = tag,
             onValueChange = { tag = it },
@@ -41,41 +46,28 @@ fun MainScreen() {
 
         Row {
             Button(
-                onClick = { vm.loadRandomCat() },
-                modifier = Modifier.weight(1f)
-            ) {
-                Text("Random Cat")
-            }
-
-            Spacer(Modifier.width(8.dp))
-
-            Button(
-                onClick = { vm.loadCatByTag(tag) },
+                onClick = { onTagSelected(tag) },
                 modifier = Modifier.weight(1f),
                 enabled = tag.isNotEmpty()
             ) {
                 Text("By Tag")
             }
         }
+    }
+}
 
-        Spacer(Modifier.height(16.dp))
-
-        when (state) {
-            is MainState.Loading -> {
-                CatItemShimmer()
-            }
-            is MainState.Success -> {
-                (state as MainState.Success).bitmap?.let {
-                    Image(
-                        bitmap = it.asImageBitmap(),
-                        contentDescription = "Cat"
-                    )
-                }
-            }
-            is MainState.Error -> {
-                val error = (state as MainState.Error).message
-                Text("Error: $error", color = Color.Red)
-            }
+@Composable
+private fun CatContent(state: MainState) {
+    when (state) {
+        is MainState.Loading -> CatItemShimmer()
+        is MainState.Success -> state.bitmap?.let {
+            Image(
+                bitmap = it.asImageBitmap(),
+                contentDescription = "Cat"
+            )
+        }
+        is MainState.Error -> {
+            Text("Error: ${state.message}", color = Color.Red)
         }
     }
 }

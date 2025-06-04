@@ -5,6 +5,8 @@ plugins {
     alias(libs.plugins.compose.compiler)
     id("com.google.dagger.hilt.android")
     id("com.google.devtools.ksp")
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 android {
@@ -63,6 +65,15 @@ android {
 }
 
 dependencies {
+
+    // Firebase
+    implementation(platform("com.google.firebase:firebase-bom:33.14.0"))
+    implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-messaging")
+    implementation("com.google.firebase:firebase-crashlytics")
+    implementation("com.google.firebase:firebase-config")
+
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.3")
 
     // Hilt
     implementation("com.google.dagger:hilt-android:2.56.2")

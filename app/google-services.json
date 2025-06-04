@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "926007505124",
+    "project_id": "android2sem",
+    "storage_bucket": "android2sem.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:926007505124:android:136e8e13b377c245e03cf1",
+        "android_client_info": {
+          "package_name": "ru.itis.androidlab2sem"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMVpMA7kgJAMobWPTqG6CX53OKhKA8MYc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
